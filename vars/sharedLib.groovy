@@ -1,6 +1,6 @@
 def call()
 {
-    node {
+    node('ci-server') {
 
         stage('code checkout') {
             sh 'env'
