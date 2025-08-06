@@ -13,7 +13,7 @@ def call()
             } else {
                 checkout([$class           : 'GitSCM',
                           branches         : [[name: "*/${env.branch_name}"]],
-                          userRemoteConfigs: [[url: 'https://github.com/pdevops78/expense-${component}.git']]
+                          userRemoteConfigs: [[url: "https://github.com/pdevops78/expense-${component}.git"]]
                 ])
             }
         }
