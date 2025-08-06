@@ -8,7 +8,7 @@ def call()
             if (env.tag_name ==~ '.*') {
                 checkout([$class           : 'GitSCM',
                           branches         : [[name: "refs/tags/${env.tag_name}"]],
-                          userRemoteConfigs: [[url: 'https://github.com/pdevops78/expense-backend.git']]
+                          userRemoteConfigs: [[url: "https://github.com/pdevops78/expense-${component}.git"]]
                 ])
             } else {
                 checkout([$class           : 'GitSCM',
