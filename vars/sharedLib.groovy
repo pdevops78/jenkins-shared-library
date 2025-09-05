@@ -8,17 +8,17 @@ def call()
             if (env.tag_name ==~ '.*') {
                 checkout([$class           : 'GitSCM',
                           branches         : [[name: "refs/tags/${env.tag_name}"]],
-                          userRemoteConfigs: [[url: "https://github.com/pdevops78/roboshop-${component}.git"]]
+                          userRemoteConfigs: [[url: "https://github.com/pdevops78/expense-${component}.git"]]
                 ])
             } else {
                 checkout([$class           : 'GitSCM',
                           branches         : [[name: "*/${env.branch_name}"]],
-                          userRemoteConfigs: [[url: "https://github.com/pdevops78/roboshop-${component}.git"]]
+                          userRemoteConfigs: [[url: "https://github.com/pdevops78/expense-${component}.git"]]
                 ])
             }
         }
         if (env.tag_name ==~ '.*') {
-            sh 'docker build -t 041445559784.dkr.ecr.us-east-1.amazonaws.com/roboshop-${component}:${TAG_NAME} .'
+            sh 'docker build -t 041445559784.dkr.ecr.us-east-1.amazonaws.com/expense-${component}:${TAG_NAME} .'
             print 'OK'
             stage('Build Code') {
                 echo "OK"
@@ -27,7 +27,7 @@ def call()
             stage('Release Software') {
                 echo "OK"
                 sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 041445559784.dkr.ecr.us-east-1.amazonaws.com'
-                sh 'docker push 041445559784.dkr.ecr.us-east-1.amazonaws.com/roboshop-${component}:${TAG_NAME}'
+                sh 'docker push 041445559784.dkr.ecr.us-east-1.amazonaws.com/expense-${component}:${TAG_NAME}'
             }
             stage('Deploy to Dev'){
                 sh 'aws eks update-kubeconfig --name dev-eks'
